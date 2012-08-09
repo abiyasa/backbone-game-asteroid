@@ -2,9 +2,15 @@
 /*global require */
 
 require([
-    "app"
-], function (App) {
+    'jquery',
+    
+    'managers/ScreenManager',
+    'screens/MainScreen'
+], function ($, ScreenManager, MainScreen) {
     'use strict';
-    var app = new App();
-    app.go();
+    
+    var screenManager = new ScreenManager({ el: $('#main') });
+    
+    var mainScreen = new MainScreen();
+    screenManager.showView(mainScreen);
 });
