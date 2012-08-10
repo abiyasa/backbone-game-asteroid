@@ -12,12 +12,10 @@ define([
 ], function ($, _, Backbone, GameObject, TextGameView) {
     'use strict';
     var MainScreen = Backbone.View.extend({
-        DEBUG_TAG: 'MainScreen',
-        
         className: 'main-screen',
         
         initialize: function () {
-            console.log(this.DEBUG_TAG, 'initialize()');
+            console.log('initialize()');
             
             // init all 
             this.hero = new GameObject();

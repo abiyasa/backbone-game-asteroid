@@ -6,8 +6,6 @@ define([
 ], function (Backbone) {
     'use strict';
     var GameObject = Backbone.Model.extend({
-        DEBUG_TAG: 'GameObject',
-        
         defaults: {
             'name': 'GameObject',
             'energy': 100,

@@ -11,10 +11,8 @@ define([
     'use strict';
     
     var TextGameView = Backbone.View.extend({
-        DEBUG_TAG: 'TextGameView',
-        
         initialize: function () {
-            console.log(this.DEBUG_TAG, 'initialize()');
+            console.log('initialize()');
             
             // TODO bind event here!
         },
