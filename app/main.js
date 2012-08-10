@@ -3,14 +3,48 @@
 
 require([
     'jquery',
+    'statemachine',
     
     'managers/ScreenManager',
+    'screens/IntroScreen',
     'screens/MainScreen'
-], function ($, ScreenManager, MainScreen) {
+], function ($, StateMachine, ScreenManager, IntroScreen, MainScreen) {
     'use strict';
     
+    // for managing our screens
     var screenManager = new ScreenManager({ el: $('#main') });
+
+    // state machine
+    var stateMachine = new StateMachine.create({
+        initial: 'init',
+        events: [
+            { name: 'showIntro', from: 'init', to: 'intro' },
+            { name: 'startUp', from: 'intro', to: 'start' }
+        ],
+        callbacks: {
+            onshowIntro: function () {
+                var introScreen = new IntroScreen();
+                introScreen.on('screenEvent', onScreenEvent);
+
+                screenManager.showView(introScreen);
+            },
+            
+            onstartUp: function (event, from, to, data) {
+                var mainScreen = new MainScreen();
+                screenManager.showView(mainScreen);
+            }
+        }
+    });
     
-    var mainScreen = new MainScreen();
-    screenManager.showView(mainScreen);
+    // the screen event, which will trigger 
+    var onScreenEvent = function (detail) {
+        console.log('screen event happens. detail=', detail);
+        
+        if (stateMachine[detail]) {
+            stateMachine[detail]();
+        }
+    };
+        
+    // start!
+    stateMachine.showIntro();
 });
