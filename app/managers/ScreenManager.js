@@ -10,12 +10,6 @@ define([
     'use strict';
     var ScreenManager = Backbone.View.extend({
         
-        initialize: function () {
-            // TODO get initialState
-            
-            // TODO set current state
-        },
-        
         showView: function (theView) {
             this.clearView();
             $(this.el).append(theView.render().el);
