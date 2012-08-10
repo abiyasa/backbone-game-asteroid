@@ -12,7 +12,11 @@ require.config({
     // Libraries.
     jquery: "../assets/js/libs/jquery",
     lodash: "../assets/js/libs/lodash",
-    backbone: "../assets/js/libs/backbone"
+    backbone: "../assets/js/libs/backbone",    
+    statemachine: "../assets/js/libs/state-machine",
+      
+    // plugins
+    text: "../assets/js/libs/text"
   },
 
   shim: {
