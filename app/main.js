@@ -36,7 +36,7 @@ require([
         }
     });
     
-    // the screen event, which will trigger 
+    // the screen event, which will trigger screen changes
     var onScreenEvent = function (detail) {
         console.log('screen event happens. detail=', detail);
         
