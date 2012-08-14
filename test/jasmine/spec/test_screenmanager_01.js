@@ -92,6 +92,46 @@ define([
             expect($('#main')).toContain('div.#simpleView2');
             expect($('#main #simpleView2')).toHaveClass('main-view');
             expect($('#main #simpleView2')).toHaveText('hello');
-        });        
+        });
+        
+        it('removes all view\'s event on remove view', function () {
+            var ClickableScreen = Backbone.View.extend({
+                className: 'main-view',
+                
+                render: function () {
+                    $(this.el).html('hello');
+                    return this;
+                },
+                
+                events: {
+                    'click' : 'onClick'
+                },
+                
+                onClick: function () {
+                    console.log('view is clicked');
+                    this.trigger('screenEvent');
+                }
+            });
+            var mainScreen = new ClickableScreen({
+                id: 'simpleView1'
+            });
+            
+            this.screenManager.showView(mainScreen);
+            expect($('#main')).toContain('div.#simpleView1');
+            
+            var onScreenEvent = jasmine.createSpy('screen event callback');
+            mainScreen.on('screenEvent', onScreenEvent);
+            $('#simpleView1').click();  // trigger click
+            expect(onScreenEvent).toHaveBeenCalled();
+            expect(onScreenEvent.calls.length).toBe(1);  // only called once
+
+            $('#simpleView1').click();  // trigger click
+            expect(onScreenEvent.calls.length).toBe(2);
+            
+            this.screenManager.clearView();
+            expect($('#main').children().length).toBe(0);
+            $('#simpleView1').click();  // trigger click
+            expect(onScreenEvent.calls.length).toBe(2);  // only called once
+        });
     });
 });
