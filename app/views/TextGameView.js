@@ -11,6 +11,8 @@ define([
     'use strict';
     
     var TextGameView = Backbone.View.extend({
+        className: 'game-object',
+        
         initialize: function () {
             console.log('initialize()');
             
@@ -20,14 +22,17 @@ define([
         render: function () {
             var gameObject = this.model;
             
-            // print all game object property
-            var debugString = '';
-            var props = ['name', 'energy', 'active'];
-            _.each(props, function (prop) {
-                debugString += prop + '=' + gameObject.get(prop) + ';';
-            });
+            // print game object properties
+            var debugString = gameObject.get('name') + ' (' + 
+                gameObject.get('energy') + ')';
             $(this.el).html(debugString);
             
+            // update position
+            $(this.el).css({
+                top: gameObject.get('posY'),
+                left: gameObject.get('posX')
+            });
+                
             return this;
         }
     });
