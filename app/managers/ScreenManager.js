@@ -11,14 +11,25 @@ define([
     var ScreenManager = Backbone.View.extend({
         
         showView: function (theView) {
-            this.clearView();
-            $(this.el).append(theView.render().el);
+            // check if the current view is being shown
+            if (this.currentView !== theView) {
+                this.clearView();
+                $(this.el).append(theView.render().el);
+                
+                this.currentView = theView;
+            }
+
             return this;
         },
         
         // clear the currently shown view
         clearView: function () {
             $(this.el).empty();
+            
+            if (this.currentView) {
+                this.currentView.off();
+                this.currentView = undefined;
+            }
         }
     });
     
