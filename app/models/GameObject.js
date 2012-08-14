@@ -7,9 +7,15 @@ define([
     'use strict';
     var GameObject = Backbone.Model.extend({
         defaults: {
-            'name': 'GameObject',
+            'name': 'object',
+            'type': 'item',
+            'active': false,
+            
             'energy': 100,
-            'active': false
+            
+            'posX': 0,
+            'posY': 0,
+            'posZ': 0
         }
     });
 
