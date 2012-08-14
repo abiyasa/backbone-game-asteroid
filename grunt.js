@@ -26,8 +26,7 @@ module.exports = function(grunt) {
     jshint: {
       options: {
         scripturl: true,
-        nomen: false          
-      }
+      },
     },
 
     // The jst task compiles all application templates into JavaScript
@@ -141,7 +140,8 @@ module.exports = function(grunt) {
   // dist/debug/require.js, and then concatenate the require/define shim
   // almond.js and dist/debug/templates.js into the require.js file.
   //grunt.registerTask("default", "clean lint jst requirejs concat");
-  grunt.registerTask("default", "clean requirejs concat");
+  // Note: have to remove lint since it conflicts with jshint comment
+  grunt.registerTask("default", "clean jst requirejs concat");
 
   // The debug task is simply an alias to default to remain consistent with
   // debug/release.
