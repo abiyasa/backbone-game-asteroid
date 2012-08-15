@@ -40,9 +40,9 @@ require([
     var onScreenEvent = function (detail) {
         console.log('screen event happens. detail=', detail);
         
-        if (stateMachine[detail]) {
-            stateMachine[detail]();
-        }
+        // the detail will call the state machine method
+        var stateMethod = stateMachine[detail];
+        return (stateMethod ? stateMethod.apply(stateMachine) : undefined);
     };
         
     // start!
