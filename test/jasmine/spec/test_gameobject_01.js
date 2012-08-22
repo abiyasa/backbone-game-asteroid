@@ -16,7 +16,7 @@ define([
         it("has default values", function() {
             var gameObject = new GameObject();
             
-            expect(gameObject.get('name')).toBe('GameObject');
+            expect(gameObject.get('name')).toBe('object');
             expect(gameObject.get('active')).toBeFalsy();
         });
     });
