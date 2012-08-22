@@ -15,7 +15,11 @@ define([
             
             'posX': 0,
             'posY': 0,
-            'posZ': 0
+            'posZ': 0,
+            
+            'speedX': 0,
+            'speedY': 0,
+            'speedZ': 0
         }
     });
 
