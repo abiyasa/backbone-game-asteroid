@@ -21,7 +21,7 @@ define([
             this.hero = new GameObject();
             this.heroView = new TextGameView({ model: this.hero });
             
-            $(this.el).append(this.heroView.el);
+            this.$el.append(this.heroView.el);
         },
         
         render: function () {

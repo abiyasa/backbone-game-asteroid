@@ -25,10 +25,10 @@ define([
             // print game object properties
             var debugString = gameObject.get('name') + ' (' + 
                 gameObject.get('energy') + ')';
-            $(this.el).html(debugString);
+            this.$el.html(debugString);
             
             // update position
-            $(this.el).css({
+            this.$el.css({
                 top: gameObject.get('posY'),
                 left: gameObject.get('posX')
             });
