@@ -32,6 +32,7 @@ require([
             onstartUp: function (event, from, to, data) {
                 var mainScreen = new MainScreen();
                 screenManager.showView(mainScreen);
+                mainScreen.start();
             }
         }
     });
