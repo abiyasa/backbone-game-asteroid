@@ -13,20 +13,35 @@ define([
     // For controlling game object position
     var PositionController = function (gameObject, options) {
         this.gameObject = gameObject;
+        options = options || {};
         
-        // TODO inject and set default gameObject positions and speed
-        
-        // TODO get the movement min and max position
+        // TODO check and if necessary, inject and set default gameObject positions and speed
+
+        // get the potition area
+        this.minX = options.minX;
+        this.maxX = options.maxX;
+        this.hasArea = (typeof (this.minX) !== 'undefined') && (typeof (this.maxX) !== 'undefined');
     };
     
     // update game object position
     PositionController.prototype.update = function (time) {
         var theGameObject = this.gameObject;
-        
+
+        // update position
         var newPosX = theGameObject.get('posX') + theGameObject.get('speedX');
         var newPosY = theGameObject.get('posY') + theGameObject.get('speedY');
         var newPosZ = theGameObject.get('posZ') + theGameObject.get('speedZ');
         
+        // limit position based on area
+        if (this.hasArea) {
+            if (newPosX < this.minX) {
+                newPosX = this.maxX + (newPosX - this.minX);
+            }
+            if (this.maxX && (newPosX > this.maxX)) {
+                newPosX = this.minX + (newPosX - this.maxX);
+            }
+        }
+
         theGameObject.set({ posX: newPosX, posY: newPosY, posZ: newPosZ }, { silent: true});
     };
 
