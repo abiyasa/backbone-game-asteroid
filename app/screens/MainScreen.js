@@ -10,9 +10,10 @@ define([
     'models/GameObject',
     'views/TextGameView',
     'controller/PositionController',
+    'controller/InputKeyboardController',
     
     'plugins/requestAnimationFrame'
-], function ($, _, Backbone, GameObject, TextGameView, PositionController) {
+], function ($, _, Backbone, GameObject, TextGameView, PositionController, InputKeyboardController) {
     'use strict';
     var MainScreen = Backbone.View.extend({
         className: 'main-screen',
@@ -29,6 +30,7 @@ define([
                 minX: 0,
                 maxX: 480
             });
+            this.inputKeyboardController = new InputKeyboardController(hero);
             
             this.$el.append(this.heroView.el);
         },
@@ -54,6 +56,7 @@ define([
             }
             
             // update
+            this.inputKeyboardController.update(time);
             this.positionController.update(time);
             
             this.render();
