@@ -23,14 +23,21 @@ define([
         initialize: function () {
             console.log('initialize()');
             
-            // init all             
+            // init game objects
             var hero = new GameObject({ speedX: 5 });
+            
+            // init views
             this.heroView = new TextGameView({ model: hero });
-            this.positionController = new PositionController(hero, {
+            
+            // init controller
+            this.controllers = [];
+            var positionController = new PositionController(hero, {
                 minX: 0,
                 maxX: 480
             });
-            this.inputKeyboardController = new InputKeyboardController(hero);
+            this.controllers.push(positionController);
+            var inputKeyboardController = new InputKeyboardController(hero);
+            this.controllers.push(inputKeyboardController);
             
             this.$el.append(this.heroView.el);
         },
@@ -55,9 +62,13 @@ define([
                 window.requestAnimationFrame(this.update.bind(this));
             }
             
-            // update
-            this.inputKeyboardController.update(time);
-            this.positionController.update(time);
+            // update controllers
+            var theControllers = this.controllers;
+            var numOfControllers = theControllers.length;
+            var i;
+            for (i = 0; i < numOfControllers; i++) {
+                theControllers[i].update(time);
+            }
             
             this.render();
         },
