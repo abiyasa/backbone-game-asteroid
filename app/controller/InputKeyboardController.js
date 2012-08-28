@@ -36,9 +36,12 @@ define([
             13: 'fire2'
         };
         
+        // handle movement force
+        this.movementForce = options.movementForce || 1;
+        
         // init event listener
         window.addEventListener('keydown', this.onKeyUpDown.bind(this));
-        window.addEventListener('keyUp', this.onKeyUpDown.bind(this));
+        window.addEventListener('keyup', this.onKeyUpDown.bind(this));
     };
     
     // handle keyboard event up and down
@@ -54,8 +57,19 @@ define([
     InputKeyboardController.prototype.update = function (time) {
         var theGameObject = this.gameObject;
 
-        // TODO check the status and updates game object based on the keyStates
-        //theGameObject.set({ posX: newPosX, posY: newPosY, posZ: newPosZ }, { silent: true});
+        // check the status and updates game object based on the keyStates
+        var theKeyStates = this.keyStates;
+        var forceX, forceY, forceZ;
+        if (theKeyStates.left) {
+            forceX = -this.movementForce;
+        } else if (theKeyStates.right) {
+            forceX = this.movementForce;
+        } else {
+            forceX = 0;
+        }
+        theGameObject.set({
+            forceX: forceX
+        }, { silent: true});
     };
 
     return InputKeyboardController;

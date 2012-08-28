@@ -25,7 +25,7 @@ define([
     PositionController.prototype.update = function (time) {
         var theGameObject = this.gameObject;
         
-        // TODO calculate speed based on current force
+        // calculate speed based on current force
         var newSpeedX = theGameObject.get('speedX');
         newSpeedX += theGameObject.get('forceX');
         var maxSpeed = theGameObject.get('maxSpeed');
@@ -34,7 +34,7 @@ define([
         } else if (newSpeedX < -maxSpeed) {
             newSpeedX = -maxSpeed;
         }
-            
+
         var newSpeedY = theGameObject.get('speedY');
         var newSpeedZ = theGameObject.get('speedZ');
         

@@ -38,7 +38,9 @@ define([
                 maxX: 480
             });
             this.controllers.push(positionController);
-            var inputKeyboardController = new InputKeyboardController(hero);
+            var inputKeyboardController = new InputKeyboardController(hero, {
+                movementForce: 0.1
+            });
             this.controllers.push(inputKeyboardController);
             
             this.$el.append(this.heroView.el);
