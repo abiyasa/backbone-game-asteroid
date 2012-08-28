@@ -45,8 +45,8 @@ define([
         var axises = this.axises;
         var numOfAxises = axises.length;
         
-        var i, key, speed;
-        var newSpeeds = {};
+        var i, key, speed, pos;
+        var changedProperties = {};
         for (i = 0; i < numOfAxises; i++) {
             key = axises[i];
             
@@ -57,34 +57,25 @@ define([
             } else if (speed < -maxSpeed) {
                 speed = -maxSpeed;
             }
-            newSpeeds[key] = speed;
-        }
-        
-        // update position
-        var newPosX = theGameObject.get('posX') + newSpeeds.X;
-        var newPosY = theGameObject.get('posY') + newSpeeds.Y;
-        var newPosZ = theGameObject.get('posZ') + newSpeeds.Z;
-        
-        // limit position based on area
-        if (this.hasArea) {
-            if (newPosX < this.minX) {
-                newPosX = this.maxX + (newPosX - this.minX);
+            changedProperties['speed' + key] = speed;
+
+            // update positions
+            pos = theGameObject.get('pos' + key) + speed;
+
+            // limit position based on area
+            if (this.hasArea) {
+                if (pos < this['min' + key]) {
+                    pos = this.maxX + (pos - this.minX);
+                }
+                if (this.maxX && (pos > this.maxX)) {
+                    pos = this.minX + (pos - this.maxX);
+                }
             }
-            if (this.maxX && (newPosX > this.maxX)) {
-                newPosX = this.minX + (newPosX - this.maxX);
-            }
+            changedProperties['pos' + key] = pos;
         }
 
-        // update game object
-        theGameObject.set({
-            posX: newPosX,
-            posY: newPosY,
-            posZ: newPosZ,
-            
-            speedX: newSpeeds.X,
-            speedY: newSpeeds.Y,
-            speedZ: newSpeeds.Z
-        }, { silent: true});
+        // update game object properties
+        theGameObject.set(changedProperties, { silent: true});
     };
 
     return PositionController;
