@@ -15,16 +15,24 @@ define([
         this.gameObject = gameObject;
         options = options || {};
         
+        // dimension, 2D or 3D
+        var dimensions = [ 'X', 'Y' ];
+        this.axis = dimensions;
+        
         // get the potition area
-        var areaProps = [ 'minX', 'maxX', 'minY', 'maxY' ];
-        var numOfProps = areaProps.length;
-        var i;
+        var numOfDimensions = dimensions.length;
+        var i, key, value;
         var hasArea = true;
-        for (i = 0; i < numOfProps; i++) {
-            var key = areaProps[i];
+        for (i = 0; i < numOfDimensions; i++) {
+            // get min
+            key = 'min' + dimensions[i];
+            this[key] = value = options[key];
+            hasArea = hasArea && (typeof (value) !== 'undefined');
             
-            this[key] = options[key];
-            hasArea = hasArea && (typeof (options[key]) !== 'undefined');
+            // get max
+            key = 'max' + dimensions[i];
+            this[key] = value = options[key];
+            hasArea = hasArea && (typeof (value) !== 'undefined');
         }
         this.hasArea = hasArea;
     };
@@ -33,10 +41,11 @@ define([
     PositionController.prototype.update = function (time) {
         var theGameObject = this.gameObject;
         
-        // calculate speed based on current force
+        // calculate speed based on current force        
+        var maxSpeed = theGameObject.get('maxSpeed');
+
         var newSpeedX = theGameObject.get('speedX');
         newSpeedX += theGameObject.get('forceX');
-        var maxSpeed = theGameObject.get('maxSpeed');
         if (newSpeedX > maxSpeed) {
             newSpeedX = maxSpeed;
         } else if (newSpeedX < -maxSpeed) {
