@@ -31,11 +31,13 @@ define([
             // init views
             this.heroView = new TextGameView({ model: hero });
             
-            // init controller
+            // init controllers
             this.controllers = [];
             var positionController = new PositionController(hero, {
                 minX: 0,
-                maxX: 480
+                maxX: 480,
+                minY: 0,
+                maxY: 480
             });
             this.controllers.push(positionController);
             var inputKeyboardController = new InputKeyboardController(hero, {

@@ -16,9 +16,17 @@ define([
         options = options || {};
         
         // get the potition area
-        this.minX = options.minX;
-        this.maxX = options.maxX;
-        this.hasArea = (typeof (this.minX) !== 'undefined') && (typeof (this.maxX) !== 'undefined');
+        var areaProps = [ 'minX', 'maxX', 'minY', 'maxY' ];
+        var numOfProps = areaProps.length;
+        var i;
+        var hasArea = true;
+        for (i = 0; i < numOfProps; i++) {
+            var key = areaProps[i];
+            
+            this[key] = options[key];
+            hasArea = hasArea && (typeof (options[key]) !== 'undefined');
+        }
+        this.hasArea = hasArea;
     };
     
     // update game object position
