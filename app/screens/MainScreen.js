@@ -39,7 +39,8 @@ define([
             });
             this.controllers.push(positionController);
             var inputKeyboardController = new InputKeyboardController(hero, {
-                movementForce: 0.1
+                movementForce: 0.1,
+                context: window
             });
             this.controllers.push(inputKeyboardController);
             

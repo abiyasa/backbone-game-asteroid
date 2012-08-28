@@ -40,8 +40,11 @@ define([
         this.movementForce = options.movementForce || 1;
         
         // init event listener
-        window.addEventListener('keydown', this.onKeyUpDown.bind(this));
-        window.addEventListener('keyup', this.onKeyUpDown.bind(this));
+        var context = options.context;
+        if (context) {
+            context.addEventListener('keydown', this.onKeyUpDown.bind(this));
+            context.addEventListener('keyup', this.onKeyUpDown.bind(this));
+        }
     };
     
     // handle keyboard event up and down
