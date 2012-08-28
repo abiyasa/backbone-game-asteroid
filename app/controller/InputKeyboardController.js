@@ -62,16 +62,26 @@ define([
 
         // check the status and updates game object based on the keyStates
         var theKeyStates = this.keyStates;
+        var movementForce = this.movementForce;
         var forceX, forceY, forceZ;
         if (theKeyStates.left) {
-            forceX = -this.movementForce;
+            forceX = -movementForce;
         } else if (theKeyStates.right) {
-            forceX = this.movementForce;
+            forceX = movementForce;
         } else {
             forceX = 0;
         }
+        if (theKeyStates.up) {
+            forceY = -movementForce;
+        } else if (theKeyStates.down) {
+            forceY = movementForce;
+        } else {
+            forceY = 0;
+        }
+
         theGameObject.set({
-            forceX: forceX
+            forceX: forceX,
+            forceY: forceY
         }, { silent: true});
     };
 
