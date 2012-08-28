@@ -34,7 +34,8 @@ define([
                 posZ: 30,
                 speedX: 5,
                 speedY: 6,
-                speedZ: -1
+                speedZ: -1,
+                maxSpeed: 10
             });
             var positionController = new PositionController(gameObject);
 
@@ -54,7 +55,8 @@ define([
                 posZ: 30,
                 speedX: 5,
                 speedY: 6,
-                speedZ: -1
+                speedZ: -1,
+                maxSpeed: 10
             });
             var positionController = new PositionController(gameObject);
 
