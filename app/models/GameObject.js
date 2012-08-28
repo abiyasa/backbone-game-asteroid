@@ -17,6 +17,14 @@ define([
             'posY': 0,
             'posZ': 0,
             
+            'forceX': 0,
+            'forceY': 0,
+            'forceZ': 0,
+            
+            'maxSpeed': 0,
+            'speed': 0,
+            'direction': 0,
+            
             'speedX': 0,
             'speedY': 0,
             'speedZ': 0

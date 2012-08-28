@@ -19,5 +19,23 @@ define([
             expect(gameObject.get('name')).toBe('object');
             expect(gameObject.get('active')).toBeFalsy();
         });
+        
+        it("has default position values", function() {
+            var gameObject = new GameObject();
+            
+            expect(gameObject.get('posX')).toEqual(0);
+            expect(gameObject.get('posY')).toEqual(0);
+            expect(gameObject.get('posZ')).toEqual(0);
+        });        
+        
+        it("has default speed values", function() {
+            var gameObject = new GameObject();
+            
+            expect(gameObject.get('speedX')).toEqual(0);
+            expect(gameObject.get('speedY')).toEqual(0);
+            expect(gameObject.get('speedZ')).toEqual(0);
+            
+            expect(gameObject.get('maxSpeed')).toEqual(0);
+        });
     });
 });

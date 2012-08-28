@@ -24,7 +24,9 @@ define([
             console.log('initialize()');
             
             // init game objects
-            var hero = new GameObject({ speedX: 5 });
+            var hero = new GameObject({
+                maxSpeed: 5
+            });
             
             // init views
             this.heroView = new TextGameView({ model: hero });

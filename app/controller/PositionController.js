@@ -15,8 +15,6 @@ define([
         this.gameObject = gameObject;
         options = options || {};
         
-        // TODO check and if necessary, inject and set default gameObject positions and speed
-
         // get the potition area
         this.minX = options.minX;
         this.maxX = options.maxX;
@@ -26,11 +24,24 @@ define([
     // update game object position
     PositionController.prototype.update = function (time) {
         var theGameObject = this.gameObject;
-
+        
+        // TODO calculate speed based on current force
+        var newSpeedX = theGameObject.get('speedX');
+        newSpeedX += theGameObject.get('forceX');
+        var maxSpeed = theGameObject.get('maxSpeed');
+        if (newSpeedX > maxSpeed) {
+            newSpeedX = maxSpeed;
+        } else if (newSpeedX < -maxSpeed) {
+            newSpeedX = -maxSpeed;
+        }
+            
+        var newSpeedY = theGameObject.get('speedY');
+        var newSpeedZ = theGameObject.get('speedZ');
+        
         // update position
-        var newPosX = theGameObject.get('posX') + theGameObject.get('speedX');
-        var newPosY = theGameObject.get('posY') + theGameObject.get('speedY');
-        var newPosZ = theGameObject.get('posZ') + theGameObject.get('speedZ');
+        var newPosX = theGameObject.get('posX') + newSpeedX;
+        var newPosY = theGameObject.get('posY') + newSpeedY;
+        var newPosZ = theGameObject.get('posZ') + newSpeedZ;
         
         // limit position based on area
         if (this.hasArea) {
@@ -42,7 +53,16 @@ define([
             }
         }
 
-        theGameObject.set({ posX: newPosX, posY: newPosY, posZ: newPosZ }, { silent: true});
+        // update game object
+        theGameObject.set({
+            posX: newPosX,
+            posY: newPosY,
+            posZ: newPosZ,
+            
+            speedX: newSpeedX,
+            speedY: newSpeedY,
+            speedZ: newSpeedZ
+        }, { silent: true});
     };
 
     return PositionController;
