@@ -98,13 +98,13 @@ define([
             expect(inputController.keyStates['right']).toBe(false);
             expect(inputController.keyStates['down']).toBe(false);
         });
-        
-        it('controls gameobject\'s force', function () {
+
+        it('controls gameobject\'s force using left and right', function () {
             var gameObject = new GameObject({
                 maxSpeed: 10
             });
             var inputController = new InputKeyboardController(gameObject);
-            
+
             // press and unpress left button
             expect(gameObject.get('forceX')).toEqual(0);
             inputController.onKeyUpDown({
@@ -119,7 +119,7 @@ define([
             });            
             inputController.update();
             expect(gameObject.get('forceX')).toEqual(0);
-            
+
             // press and unpress right button
             inputController.onKeyUpDown({
                 type: 'keydown',
@@ -131,9 +131,46 @@ define([
             inputController.onKeyUpDown({
                 type: 'keyup',
                 keyCode: 39
-            });            
+            });
             inputController.update();
             expect(gameObject.get('forceX')).toEqual(0);            
+        });
+
+        it('controls gameobject\'s force using up and down', function () {
+            var gameObject = new GameObject({
+                maxSpeed: 10
+            });
+            var inputController = new InputKeyboardController(gameObject);
+
+            // press and unpress left button
+            expect(gameObject.get('forceY')).toEqual(0);
+            inputController.onKeyUpDown({
+                type: 'keydown',
+                keyCode: 38
+            });
+            inputController.update();
+            expect(gameObject.get('forceY')).toEqual(-1);
+            inputController.onKeyUpDown({
+                type: 'keyup',
+                keyCode: 38
+            });
+            inputController.update();
+            expect(gameObject.get('forceY')).toEqual(0);
+
+            // press and unpress right button
+            inputController.onKeyUpDown({
+                type: 'keydown',
+                keyCode: 40
+            });
+            inputController.update();
+            inputController.update();
+            expect(gameObject.get('forceY')).toEqual(1);
+            inputController.onKeyUpDown({
+                type: 'keyup',
+                keyCode: 40
+            });
+            inputController.update();
+            expect(gameObject.get('forceY')).toEqual(0);
         });
     });
 });
