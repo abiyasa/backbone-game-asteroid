@@ -14,20 +14,7 @@ define([
     'use strict';
         
     describe('PositionController', function () {
-        it('inits with a default game object', function () {
-            var gameObject = new GameObject();
-            var positionController = new PositionController(gameObject);
-
-            expect(gameObject.get('posX')).toEqual(0);
-            expect(gameObject.get('posY')).toEqual(0);
-            expect(gameObject.get('posZ')).toEqual(0);
-
-            expect(gameObject.get('speedX')).toEqual(0);
-            expect(gameObject.get('speedY')).toEqual(0);
-            expect(gameObject.get('speedZ')).toEqual(0);
-        });
-        
-        it('inits with game object & initial config', function () {
+        it('can add a game object without changing it', function () {
             var gameObject = new GameObject({
                 posX: 10,
                 posY: 20,
@@ -37,7 +24,8 @@ define([
                 speedZ: -1,
                 maxSpeed: 10
             });
-            var positionController = new PositionController(gameObject);
+            var positionController = new PositionController();
+            positionController.add(gameObject);
 
             expect(gameObject.get('posX')).toEqual(10);
             expect(gameObject.get('posY')).toEqual(20);
@@ -49,8 +37,7 @@ define([
         });
 
         it('inits without min and max positon limitation', function () {
-            var gameObject = new GameObject();
-            var positionController = new PositionController(gameObject);
+            var positionController = new PositionController();
 
             expect(positionController.minX).toBeUndefined();
             expect(positionController.minY).toBeUndefined();
@@ -60,8 +47,7 @@ define([
         });
         
         it('inits with min and max positon on options', function () {
-            var gameObject = new GameObject();
-            var positionController = new PositionController(gameObject, {
+            var positionController = new PositionController({
                 minX: 0,
                 maxX: 100,
                 minY: -100,
@@ -85,7 +71,8 @@ define([
                 speedZ: -1,
                 maxSpeed: 10
             });
-            var positionController = new PositionController(gameObject);
+            var positionController = new PositionController();
+            positionController.add(gameObject);
 
             expect(gameObject.get('posX')).toEqual(10);
             expect(gameObject.get('posY')).toEqual(20);
@@ -101,5 +88,18 @@ define([
             expect(gameObject.get('posY')).toEqual(26);
             expect(gameObject.get('posZ')).toEqual(29);
         });
+        
+        it('can add several objects', function () {
+            // TODO implement this
+        });
+        
+        it('can add and remove several objects', function () {
+            // TODO implement this
+        });
+        
+        it('can update multiple objects', function () {
+            // TODO implement this
+        });
+        
     });
 });
