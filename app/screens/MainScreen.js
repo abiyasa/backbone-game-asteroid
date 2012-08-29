@@ -25,6 +25,7 @@ define([
             
             // init game objects
             var hero = new GameObject({
+                type: 'player',
                 maxSpeed: 5
             });
             

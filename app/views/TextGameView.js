@@ -16,14 +16,22 @@ define([
         initialize: function () {
             console.log('initialize()');
             
-            // TODO bind event here!
+            var gameObject = this.model;
+            if (gameObject.get('type') === 'player') {
+                this.className += ' main-player';
+                this.$el.addClass('main-player');
+                
+                console.log('this is player, changing className to ', this.className);
+            } else {
+                console.log('this is ', gameObject.get('type'), 'className is', this.className);
+            }
         },
         
         render: function () {
             var gameObject = this.model;
             
             // print game object properties
-            var debugString = gameObject.get('name') + ' (' + 
+            var debugString = gameObject.get('name') + ' (' +
                 gameObject.get('energy') + ')';
             this.$el.html(debugString);
             

@@ -9,7 +9,7 @@ require([
     'screens/IntroScreen',
     'screens/MainScreen',
     
-    'libs/loremipsum'    
+    'libs/loremipsum'
 ], function ($, StateMachine, ScreenManager, IntroScreen, MainScreen, LoremIpsumGenerator) {
     'use strict';
     
