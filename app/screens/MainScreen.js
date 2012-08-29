@@ -1,5 +1,5 @@
 /*jslint vars: true, plusplus: true, devel: true, nomen: true, indent: 4, forin: true, maxerr: 50, regexp: true */
-/*global define, window, console */
+/*global define, window, console, Math */
 
 // The main screen
 define([
@@ -20,34 +20,66 @@ define([
         
         playAnimation: false,
         
+        // play area
+        PLAY_AREA: {
+            minX: 0,
+            maxX: 480,
+            minY: 0,
+            maxY: 480
+        },
+        
         initialize: function () {
             console.log('initialize()');
             
-            // init game objects
+            // init player
+            this.gameObjects = [];
             var hero = new GameObject({
                 type: 'player',
                 maxSpeed: 5
             });
+            this.gameObjects.push(hero);
+            
+            // init other game objects
+            var i, numOfObjects = 5;
+            for (i = 0; i < numOfObjects; i++) {
+                // TODO random position
+                var randPosX = this.PLAY_AREA.minX +
+                    (Math.random() * (this.PLAY_AREA.maxX - this.PLAY_AREA.minX));
+                var randPosY = this.PLAY_AREA.minX +
+                    (Math.random() * (this.PLAY_AREA.maxX - this.PLAY_AREA.minX));
+                var randSpeedX = Math.random() * 2;
+                var randSpeedY = Math.random() * 2;
+                
+                var gameObject = new GameObject({
+                    posX: randPosX,
+                    posY: randPosY,
+                    speedX: randSpeedX,
+                    speedY: randSpeedY,
+                    maxSpeed: 2
+                });
+                this.gameObjects.push(gameObject);
+            }
             
             // init views
-            this.heroView = new TextGameView({ model: hero });
+            this.gameObjectViews = [];
+            numOfObjects = this.gameObjects.length;
+            for (i = 0; i < numOfObjects; i++) {
+                var gameObjectView = new TextGameView({ model: this.gameObjects[i] });
+                this.gameObjectViews.push(gameObjectView);
+                
+                this.$el.append(gameObjectView.el);
+            }
             
             // init controllers
             this.controllers = [];
-            var positionController = new PositionController(hero, {
-                minX: 0,
-                maxX: 480,
-                minY: 0,
-                maxY: 480
-            });
+            var positionController = new PositionController(hero,
+                _.extend({ }, this.PLAY_AREA));
             this.controllers.push(positionController);
             var inputKeyboardController = new InputKeyboardController(hero, {
                 movementForce: 0.1,
                 context: window
             });
             this.controllers.push(inputKeyboardController);
-            
-            this.$el.append(this.heroView.el);
         },
         
         // starts animation
@@ -82,7 +114,10 @@ define([
         },
         
         render: function () {
-            this.heroView.render();
+            var i, numOfObjects = this.gameObjects.length;
+            for (i = 0; i < numOfObjects; i++) {
+                this.gameObjectViews[i].render();
+            }
             
             return this;
         }
