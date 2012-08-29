@@ -7,12 +7,17 @@ require([
     
     'managers/ScreenManager',
     'screens/IntroScreen',
-    'screens/MainScreen'
-], function ($, StateMachine, ScreenManager, IntroScreen, MainScreen) {
+    'screens/MainScreen',
+    
+    'libs/loremipsum'    
+], function ($, StateMachine, ScreenManager, IntroScreen, MainScreen, LoremIpsumGenerator) {
     'use strict';
     
+    // inject lorem ipsum
+    LoremIpsumGenerator.inject($('#container'), { short: false });
+    
     // for managing our screens
-    var screenManager = new ScreenManager({ el: $('#main') });
+    var screenManager = new ScreenManager({ el: $('#viewport') });
 
     // state machine
     var stateMachine = new StateMachine.create({
