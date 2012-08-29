@@ -72,13 +72,19 @@ define([
             
             // init controllers
             this.controllers = [];
-            var positionController = new PositionController(hero,
-                _.extend({ }, this.PLAY_AREA));
+            var positionController = new PositionController(_.extend({ }, this.PLAY_AREA));
             this.controllers.push(positionController);
             var inputKeyboardController = new InputKeyboardController(hero, {
                 movementForce: 0.1,
                 context: window
             });
+            
+            // init position controller
+            numOfObjects = this.gameObjects.length;
+            for (i = 0; i < numOfObjects; i++) {
+                positionController.add(this.gameObjects[i]);
+            }
+            
             this.controllers.push(inputKeyboardController);
         },
         

@@ -11,8 +11,9 @@ define([
     'use strict';
 
     // For controlling game object position
-    var PositionController = function (gameObject, options) {
-        this.gameObject = gameObject;
+    var PositionController = function (options) {
+        this.gameObjects = [];
+        
         options = options || {};
         
         // dimension, 2D or 3D
@@ -37,10 +38,33 @@ define([
         this.hasArea = hasArea;
     };
     
+    // add a specific game object
+    PositionController.prototype.add = function (gameObject) {
+        this.gameObjects.push(gameObject);
+        
+        return this;
+    };
+    
+    // remove a specific game object from the list
+    PositionController.prototype.remove = function (gameObject) {
+        
+        // TODO find object on list
+        
+        // TODO remove if found        
+        
+        return this;
+    };
+    
     // update game object position
     PositionController.prototype.update = function (time) {
-        var theGameObject = this.gameObject;
-        
+        var i, numOfObjects = this.gameObjects.length;
+        for (i = 0; i < numOfObjects; i++) {
+            this.updateObject(this.gameObjects[i]);
+        }
+    };
+    
+    // intrnal funciton for updating single object
+    PositionController.prototype.updateObject = function (theGameObject, time) {
         var maxSpeed = theGameObject.get('maxSpeed');
         var axises = this.axises;
         var numOfAxises = axises.length;
