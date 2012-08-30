@@ -114,7 +114,34 @@ define([
         });
 
         it('can update multiple objects', function () {
-            // TODO implement this
+            var positionController = new PositionController();
+
+            var bonnie = new GameObject({
+                name: 'bonnie',
+                posX: 10,
+                speedX: 2,
+                maxSpeed: 2
+            });
+            positionController.add(bonnie);
+            var clyde = new GameObject({
+                name: 'clyde',
+                posX: -10,
+                speedX: 3,
+                maxSpeed: 3
+            });
+            positionController.add(clyde);
+
+            positionController.update();
+            expect(bonnie.get('posX')).toEqual(12);
+            expect(clyde.get('posX')).toEqual(-7);
+
+            positionController.update();
+            expect(bonnie.get('posX')).toEqual(14);
+            expect(clyde.get('posX')).toEqual(-4);
+
+            positionController.update();
+            expect(bonnie.get('posX')).toEqual(16);
+            expect(clyde.get('posX')).toEqual(-1);
         });
 
     });
