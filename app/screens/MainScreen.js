@@ -42,7 +42,7 @@ define([
             // init other game objects
             var i, numOfObjects = 5;
             for (i = 0; i < numOfObjects; i++) {
-                // TODO random position
+                // randomize position and speed
                 var randPosX = this.PLAY_AREA.minX +
                     (Math.random() * (this.PLAY_AREA.maxX - this.PLAY_AREA.minX));
                 var randPosY = this.PLAY_AREA.minX +
