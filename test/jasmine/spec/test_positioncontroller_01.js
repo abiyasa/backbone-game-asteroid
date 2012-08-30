@@ -6,13 +6,13 @@ define([
     'jquery',
     'lodash',
     'backbone',
-    
+
     'models/GameObject',
     'controller/PositionController'
-    
+
 ], function ($, _, Backbone, GameObject, PositionController) {
     'use strict';
-        
+
     describe('PositionController', function () {
         it('can add a game object without changing it', function () {
             var gameObject = new GameObject({
@@ -45,7 +45,7 @@ define([
             expect(positionController.maxY).toBeUndefined();
             expect(positionController.hasArea).toBe(false);
         });
-        
+
         it('inits with min and max positon on options', function () {
             var positionController = new PositionController({
                 minX: 0,
@@ -60,7 +60,7 @@ define([
             expect(positionController.maxY).toEqual(200);
             expect(positionController.hasArea).toBe(true);
         });
-        
+
         it('updates game object position', function () {
             var gameObject = new GameObject({
                 posX: 10,
@@ -81,25 +81,41 @@ define([
             expect(gameObject.get('speedX')).toEqual(5);
             expect(gameObject.get('speedY')).toEqual(6);
             expect(gameObject.get('speedZ')).toEqual(-1);
-            
+
             positionController.update();
-            
+
             expect(gameObject.get('posX')).toEqual(15);
             expect(gameObject.get('posY')).toEqual(26);
             expect(gameObject.get('posZ')).toEqual(29);
         });
-        
-        it('can add several objects', function () {
-            // TODO implement this
+
+        it('can add and remove several game objects', function () {
+            var positionController = new PositionController();
+
+            var bonnie = new GameObject({ name: 'bonnie' });
+            positionController.add(bonnie);
+            var clyde = new GameObject({ name: 'clyde' });
+            positionController.add(clyde);
+
+            expect(positionController.gameObjects.length).toEqual(2);
+            expect(positionController.gameObjects[0]).toEqual(bonnie);
+            expect(positionController.gameObjects[1]).toEqual(clyde);
+
+            // remove objects
+            positionController.remove(bonnie);
+            expect(positionController.gameObjects.length).toEqual(1);
+            expect(positionController.gameObjects[0]).toEqual(clyde);
+
+            positionController.remove(bonnie);
+            expect(positionController.gameObjects.length).toEqual(1);
+
+            positionController.remove(clyde);
+            expect(positionController.gameObjects.length).toEqual(0);
         });
-        
-        it('can add and remove several objects', function () {
-            // TODO implement this
-        });
-        
+
         it('can update multiple objects', function () {
             // TODO implement this
         });
-        
+
     });
 });

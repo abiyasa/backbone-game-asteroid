@@ -6,20 +6,20 @@ define([
     'jquery',
     'lodash',
     'backbone'
-    
+
 ], function ($, _, Backbone) {
     'use strict';
 
     // For controlling game object position
     var PositionController = function (options) {
         this.gameObjects = [];
-        
+
         options = options || {};
-        
+
         // dimension, 2D or 3D
         var axises = [ 'X', 'Y', 'Z' ];
         this.axises = axises;
-        
+
         // get the potition area
         var numOfAxises = axises.length;
         var i, key, value;
@@ -29,7 +29,7 @@ define([
             key = 'min' + axises[i];
             this[key] = value = options[key];
             hasArea = hasArea || (typeof (value) !== 'undefined');
-            
+
             // get max
             key = 'max' + axises[i];
             this[key] = value = options[key];
@@ -37,24 +37,31 @@ define([
         }
         this.hasArea = hasArea;
     };
-    
+
     // add a specific game object
     PositionController.prototype.add = function (gameObject) {
         this.gameObjects.push(gameObject);
-        
+
         return this;
     };
-    
+
     // remove a specific game object from the list
     PositionController.prototype.remove = function (gameObject) {
-        
-        // TODO find object on list
-        
-        // TODO remove if found        
-        
+
+        // find object on list
+        var i, numOfObjects = this.gameObjects.length, theObject;
+        for (i = 0; i < numOfObjects; i++) {
+            theObject = this.gameObjects[i];
+            if (theObject === gameObject) {
+                // remove if found
+                this.gameObjects.splice(i, 1);
+                break;
+            }
+        }
+
         return this;
     };
-    
+
     // update game object position
     PositionController.prototype.update = function (time) {
         var i, numOfObjects = this.gameObjects.length;
@@ -62,19 +69,19 @@ define([
             this.updateObject(this.gameObjects[i]);
         }
     };
-    
+
     // intrnal funciton for updating single object
     PositionController.prototype.updateObject = function (theGameObject, time) {
         var maxSpeed = theGameObject.get('maxSpeed');
         var axises = this.axises;
         var numOfAxises = axises.length;
-        
+
         var i, key, speed, pos;
         var changedProperties = {};
         for (i = 0; i < numOfAxises; i++) {
             key = axises[i];
-            
-            // calculate speed based on current force            
+
+            // calculate speed based on current force
             speed = theGameObject.get('speed' + key) + theGameObject.get('force' + key);
             if (speed > maxSpeed) {
                 speed = maxSpeed;
